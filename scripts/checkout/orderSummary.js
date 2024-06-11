@@ -2,15 +2,9 @@ import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js';
 import {products, getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/dayjs.min.js'
-import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js'
-
-console.log(dayjs())
-
-const today = dayjs()
-const deliveryDate = today.add(7, 'days')
-console.log(deliveryDate.format('dddd, MMMM D'));
-
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/dayjs.min.js';
+import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
 
  export function renderOrderSummary(){
@@ -171,6 +165,8 @@ console.log(deliveryDate.format('dddd, MMMM D'));
 
               const container = document.querySelector(`js-cart-container-${productId}`)
               container.remove()
+
+              renderPaymentSummary()
               
 
           })
@@ -183,6 +179,7 @@ console.log(deliveryDate.format('dddd, MMMM D'));
           const {productId, deliveryOptionId} = element.dataset;
           updateDeliveryOption(productId, deliveryOptionId);
           renderOrderSummary();
+          renderPaymentSummary();
 
         })
       })
